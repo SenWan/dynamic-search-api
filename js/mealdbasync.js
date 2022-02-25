@@ -1,3 +1,5 @@
+// here we just check await and async
+
 const searchFood = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
@@ -12,12 +14,6 @@ const searchFood = () => {
 
 const displaySearchResults = meals => {
     const searchResult = document.getElementById('search-result');
-    searchResult.textContent = '';
-    //clear data display but it is not best practice
-    /*
-    if(meals.length == 0) {
-      alert('No result is found');
-    } */
     meals.forEach(meal => {
         const div = document.createElement('div');
         div.classList.add('col');
@@ -36,16 +32,16 @@ const displaySearchResults = meals => {
     });
 };
 
-const loadMealDetails = mealId => {
+const loadMealDetails = async mealId => {
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
-    fetch(url)
-    .then(res => res.json())
-    .then(data => displayMealDetail(data.meals[0]));
+    
+    const res = await fetch(url);
+    const data = await res.json();
+    displayMealDetail(data.meal[0]);
 };
 
 const displayMealDetail = meal => {
     const mealDetails = document.getElementById('meal-details');
-    mealDetails.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
